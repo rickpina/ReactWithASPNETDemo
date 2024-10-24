@@ -1,31 +1,33 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+
 
 function App() {
-    const [forecasts, setForecasts] = useState();
+    const [people, setPeople] = useState();
 
     useEffect(() => {
-        populateWeatherData();
+        populatePersonData();
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
+    const contents = people === undefined
+        ? <p><em>Loading... Please refresh once the ASP.NET backend has started.</em></p>
         : <table className="table table-striped" aria-labelledby="tableLabel">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>City</th>
                 </tr>
             </thead>
             <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                {people.map(person =>
+                    <tr key={person.email}>
+                        <td>{person.firstName}</td>
+                        <td>{person.lastName}</td>
+                        <td>{person.age}</td>
+                        <td>{person.email}</td>
+                        <td>{person.city}</td>
                     </tr>
                 )}
             </tbody>
@@ -33,19 +35,15 @@ function App() {
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
+            <h1 id="tableLabel">Person Data</h1>
+            <p>This component demonstrates fetching custom data from the server.</p>
             {contents}
         </div>
     );
-    
-    async function populateWeatherData() {
-        //const response = await fetch('weatherforecast');
-        //const data = await response.json();
-        //setForecasts(data);
 
+    async function populatePersonData() {
         try {
-            const response = await fetch('/weatherforecast');
+            const response = await fetch('/person');
             console.log("Response status:", response.status); // Check the HTTP status code
             const text = await response.text(); // Log the full response as text
             console.log("Response body:", text); // This will log the raw HTML or JSON
@@ -57,7 +55,7 @@ function App() {
             // Only attempt to parse as JSON if the content-type is JSON
             if (response.headers.get('content-type')?.includes('application/json')) {
                 const data = JSON.parse(text); // Parse JSON if it's valid
-                setForecasts(data);
+                setPeople(data);
             } else {
                 console.error('Response is not JSON:', text);
             }
@@ -65,6 +63,7 @@ function App() {
             console.error('Error fetching person data:', error);
         }
     }
+
 }
 
 export default App;

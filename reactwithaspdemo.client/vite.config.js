@@ -47,6 +47,10 @@ export default defineConfig({
                 secure: false
             }
         },
+        '^/person': {  
+            target,  
+            secure: false
+        },
         port: 5137,
         https: {
             key: fs.readFileSync(keyFilePath),
