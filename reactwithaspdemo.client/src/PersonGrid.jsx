@@ -41,6 +41,7 @@ function App() {
         </div>
     );
 
+
     async function populatePersonData() {
         try {
             const response = await fetch('/person');
