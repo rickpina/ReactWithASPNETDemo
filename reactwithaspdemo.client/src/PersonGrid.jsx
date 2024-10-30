@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
     const [people, setPeople] = useState();
+    const [sortAgeOrder, setAgeSortOrder] = useState("asc");
 
     useEffect(() => {
         populatePersonData();
@@ -15,7 +16,7 @@ function App() {
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Age</th>
+                    <th onClick={changeAgeSort} style={{ cursor: "pointer" }}>Age</th>
                     <th>Email</th>
                     <th>City</th>
                 </tr>
@@ -41,9 +42,40 @@ function App() {
         </div>
     );
 
+    function changeAgeSort() {
+        
+
+        if (people != undefined) {
+            alert("Age sort not null was clicked");
+
+            
+        }
+    }
 
     async function populatePersonData() {
         try {
+
+            const sortOrder = "asc";        // Set to "asc" for ascending or "desc" for descending
+            const sortColumn = "name";      // The column to sort by, e.g., "name" or "age"
+            const searchQuery = "Alice";    // The search query, e.g., a name or partial string to filter results
+
+            const requestPayload = {
+                sortOrder,
+                sortColumn,
+                searchQuery,
+            };
+
+
+            const response2 = await fetch('/person/GetData', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestPayload),
+            });
+            console.log("Response status:", response2.status); // Check the HTTP status code
+            const text2 = await response2.text(); // Log the full response as text
+
+            console.log("Response body:", text2); // This will log the raw HTML or JSON
+
             const response = await fetch('/person');
             console.log("Response status:", response.status); // Check the HTTP status code
             const text = await response.text(); // Log the full response as text
