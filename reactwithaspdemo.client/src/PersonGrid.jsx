@@ -85,6 +85,7 @@ function App() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+
             // Only attempt to parse as JSON if the content-type is JSON
             if (response.headers.get('content-type')?.includes('application/json')) {
                 const data = JSON.parse(text); // Parse JSON if it's valid
