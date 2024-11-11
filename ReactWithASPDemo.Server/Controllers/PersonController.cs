@@ -32,7 +32,7 @@ namespace ReactWithASPDemo.Server.Controllers
             
         }
 
-        [HttpPost]
+        [HttpPost("GetData")]
         public IActionResult GetData([FromBody] DataRequest request)
         {
             var people = new List<Person>
