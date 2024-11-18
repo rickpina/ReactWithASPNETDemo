@@ -66,6 +66,7 @@ function App() {
             };
 
 
+
             const response2 = await fetch('/person/GetData', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
